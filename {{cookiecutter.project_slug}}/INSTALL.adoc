@@ -1,4 +1,8 @@
+= cookiecutter-django-vix
+
 :icons: font
+:toc: left
+:sectnums:
 
 This is my initial attempt at creating a reusable https://docs.djangoproject.com/en/1.11/releases/[Django 1.11.x] project skeleton using https://github.com/audreyr/cookiecutter[cookiecutter]. This cookiecutter template is mostly based on personal preferences and is nowhere near perfect. It's still a work in progress. Contributions and suggestions for improvement are welcome.
 
@@ -58,8 +62,8 @@ This is my initial attempt at creating a reusable https://docs.djangoproject.com
 
 ===== custom scripts
 
-* `initialize_db.sh` -- deletes all migrations and `.pyc` files, recreates Postgres / PostGIS database (or deletes sqlite database -- not yet implemented), recreates migrations, superuser and basically lets you _start afresh_.
-* `syncdb.sh` -- for backing up and restoring Postgres / PostGIS database
+* https://github.com/engineervix/cookiecutter-django-vix/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/src/initialize_db.sh[`initialize_db.sh`] -- deletes all migrations and `.pyc` files, recreates Postgres / PostGIS database (or deletes sqlite database -- not yet implemented), recreates migrations, superuser and basically lets you _start afresh_.
+* https://github.com/engineervix/cookiecutter-django-vix/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/bckp/db/syncdb.sh[`syncdb.sh`] -- for backing up and restoring Postgres / PostGIS database
 
 === admin
 
