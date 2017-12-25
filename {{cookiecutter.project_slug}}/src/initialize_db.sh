@@ -12,7 +12,7 @@
 alias BEGINCOMMENT="if [ ]; then"
 alias ENDCOMMENT="fi"
 
-sqlite_db_operations(){
+sqlite_db_operations() {
   # we'll make a copy of existing SQLite Database, just in Case
   db_file="../conf/db/db.sqlite3"
   right_now=`date +%Y%m%d%H%M%S`
@@ -23,6 +23,29 @@ sqlite_db_operations(){
   else
       echo "$db_file does not exist... No SQLite DB operations to perform."
   fi
+}
+
+postgres_db_operations() {
+psql <<-EOF
+  DROP DATABASE "$db_name";
+  CREATE DATABASE "$db_name" OWNER "$db_user";
+  GRANT ALL PRIVILEGES ON DATABASE "$db_name" to "$db_user";
+  \q
+EOF
+}
+
+postgis_db_operations() {
+psql <<-EOF
+  DROP DATABASE "$db_name";
+  CREATE DATABASE "$db_name" OWNER "$db_user";
+  GRANT ALL PRIVILEGES ON DATABASE "$db_name" to "$db_user";
+  ALTER ROLE "$db_user" SUPERUSER;
+  \c "$db_name";
+  CREATE EXTENSION postgis;
+  CREATE EXTENSION postgis_topology;
+  ALTER ROLE "$db_user" NOSUPERUSER;
+  \q
+EOF
 }
 
 echo
@@ -40,9 +63,7 @@ nounderline=$(tput rmul)
 
 # usage() { echo "Usage: $0 [-n <DB_name>] [-u <DB_user>]" 1>&2; exit 1; }
 
-{% raw %}
-
-usage() {
+{% raw %}usage() {
 cat <<-EOF
   Usage: ${0##*/}  [-n ${bold}DB_Name${normal}] [-f ${bold}DB_Username${normal}]
   The ${bold}DB_Name${normal} and ${bold}DB_Username${normal} are required for the script to run.
@@ -75,9 +96,7 @@ if [ -z "${n}" ] || [ -z "${u}" ]; then
 fi
 
 db_name="${n}"
-db_user="${u}"
-
-{% endraw %}
+db_user="${u}"{% endraw %}
 
 # Step 1: Remove the all migrations files within your project
 find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
@@ -85,78 +104,10 @@ find . -path "*/migrations/*.pyc"  -delete
 
 # Step 2: Drop Existing Database and Create a New One
 
-{% if cookiecutter.database == "postgis" %}
-psql <<-EOF
-  DROP DATABASE "$db_name";
-  CREATE DATABASE "$db_name" OWNER "$db_user";
-  GRANT ALL PRIVILEGES ON DATABASE "$db_name" to "$db_user";
-  ALTER ROLE "$db_user" SUPERUSER;
-  \c "$db_name";
-  CREATE EXTENSION postgis;
-  CREATE EXTENSION postgis_topology;
-  ALTER ROLE "$db_user" NOSUPERUSER;
-  \q
-EOF
-
-{% raw %}
-# {% if cookiecutter.database == "postgis" %}
-BEGINCOMMENT
-psql <<-EOF
-  DROP DATABASE "$db_name";
-  CREATE DATABASE "$db_name" OWNER "$db_user";
-  GRANT ALL PRIVILEGES ON DATABASE "$db_name" to "$db_user";
-  ALTER ROLE "$db_user" SUPERUSER;
-  \c "$db_name";
-  CREATE EXTENSION postgis;
-  CREATE EXTENSION postgis_topology;
-  ALTER ROLE "$db_user" NOSUPERUSER;
-  \q
-EOF
-ENDCOMMENT
-{% endraw %}
-
-{% elif cookiecutter.database == "postgres" %}
-psql <<-EOF
-  DROP DATABASE "$db_name";
-  CREATE DATABASE "$db_name" OWNER "$db_user";
-  GRANT ALL PRIVILEGES ON DATABASE "$db_name" to "$db_user";
-  \q
-EOF
-
-{% raw %}
-# {% elif cookiecutter.database == "postgres" %}
-BEGINCOMMENT
-psql <<-EOF
-  DROP DATABASE "$db_name";
-  CREATE DATABASE "$db_name" OWNER "$db_user";
-  GRANT ALL PRIVILEGES ON DATABASE "$db_name" to "$db_user";
-  \q
-EOF
-ENDCOMMENT
-{% endraw %}
-
-{% elif cookiecutter.database == "sqlite" %}
-sqlite_db_operations
-
-{% raw %}
-# {% elif cookiecutter.database == "sqlite" %}
-BEGINCOMMENT
-sqlite_db_operations
-ENDCOMMENT
-{% endraw %}
-
-{% else %}
-sqlite_db_operations
-
-{% raw %}
-# {% else %}
-BEGINCOMMENT
-sqlite_db_operations
-ENDCOMMENT
-{% endraw %}
-
-{% endif %}
-
+{% if cookiecutter.database == "postgis" %}postgis_db_operations
+{% elif cookiecutter.database == "postgres" %}postgres_db_operations
+{% elif cookiecutter.database == "sqlite" %}sqlite_db_operations
+{% else %}sqlite_db_operations{% endif %}
 
 # Step 3: Create the initial migrations and generate the database schema
 python manage.py makemigrations
@@ -164,7 +115,6 @@ python manage.py migrate
 
 # Step 4: Create Superuser
 python manage.py createsuperuser
-
 
 echo 
 echo "Thanks for using engineervix's initialize_db v0.1"
