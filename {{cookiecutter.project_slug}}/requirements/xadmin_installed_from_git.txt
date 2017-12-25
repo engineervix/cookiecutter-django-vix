@@ -1,0 +1,11 @@
+# `xadmin` needs to be installed from the github repository.
+# However, running `pip freeze > requirements/base.txt` doesn't
+# specify the git repository for `xadmin`. Therefore, you need
+# to manually add it by choosing one of the following (and removing
+# xadmin==x.x.xx):
+
+# source
+# git+git://github.com/sshwsfc/xadmin.git
+
+# @engineervix's fork (no changes from original, as of 2017-12-25)
+git+git://github.com/engineervix/xadmin.git

@@ -1,0 +1,6 @@
+== {{ cookiecutter.project_name }}
+
+{{ cookiecutter.description }}
+
+:icons: font
+
