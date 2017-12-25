@@ -1,12 +1,29 @@
 #!/usr/bin/env bash
 
 #title          :initialize_db.sh
-#description    :A GeoDjango Postgis Database Cleanup and Initialization Tool
+#description    :A Django Database Cleanup and Initialization Tool
 #author         :Victor Miti<victormiti@umusebo.com>
 #date           :20171210
 #version        :0.1    
 #usage          :initialize_db.sh [-n <DB_name>] [-u <DB_user>]
 #============================================================================
+
+[ -z $BASH ] || shopt -s expand_aliases
+alias BEGINCOMMENT="if [ ]; then"
+alias ENDCOMMENT="fi"
+
+sqlite_db_operations(){
+  # we'll make a copy of existing SQLite Database, just in Case
+  db_file="../conf/db/db.sqlite3"
+  right_now=`date +%Y%m%d%H%M%S`
+  if [ -f "$db_file" ]
+  then
+      mv -v "$db_file" ../conf/db/db_bckp_"$right_now".sqlite3
+      # rm -v ../conf/db/db.sqlite3
+  else
+      echo "$db_file does not exist... No SQLite DB operations to perform."
+  fi
+}
 
 echo
 echo "============================================================================"
@@ -73,11 +90,30 @@ psql <<-EOF
   DROP DATABASE "$db_name";
   CREATE DATABASE "$db_name" OWNER "$db_user";
   GRANT ALL PRIVILEGES ON DATABASE "$db_name" to "$db_user";
+  ALTER ROLE "$db_user" SUPERUSER;
   \c "$db_name";
   CREATE EXTENSION postgis;
   CREATE EXTENSION postgis_topology;
+  ALTER ROLE "$db_user" NOSUPERUSER;
   \q
 EOF
+
+{% raw %}
+# {% if cookiecutter.database == "postgis" %}
+BEGINCOMMENT
+psql <<-EOF
+  DROP DATABASE "$db_name";
+  CREATE DATABASE "$db_name" OWNER "$db_user";
+  GRANT ALL PRIVILEGES ON DATABASE "$db_name" to "$db_user";
+  ALTER ROLE "$db_user" SUPERUSER;
+  \c "$db_name";
+  CREATE EXTENSION postgis;
+  CREATE EXTENSION postgis_topology;
+  ALTER ROLE "$db_user" NOSUPERUSER;
+  \q
+EOF
+ENDCOMMENT
+{% endraw %}
 
 {% elif cookiecutter.database == "postgres" %}
 psql <<-EOF
@@ -87,28 +123,37 @@ psql <<-EOF
   \q
 EOF
 
+{% raw %}
+# {% elif cookiecutter.database == "postgres" %}
+BEGINCOMMENT
+psql <<-EOF
+  DROP DATABASE "$db_name";
+  CREATE DATABASE "$db_name" OWNER "$db_user";
+  GRANT ALL PRIVILEGES ON DATABASE "$db_name" to "$db_user";
+  \q
+EOF
+ENDCOMMENT
+{% endraw %}
+
 {% elif cookiecutter.database == "sqlite" %}
-# make a copy of existing SQLite Database, just in Case
-db_file="../conf/db/db.sqlite3"
-right_now=`date +%Y%m%d%H%M%S`
-if [ -f "$db_file" ]
-then
-    mv -v "$db_file" ../conf/db/db_bckp_"$right_now".sqlite3
-    # rm -v ../conf/db/db.sqlite3
-else
-    echo "$db_file not found."
-fi
+sqlite_db_operations
+
+{% raw %}
+# {% elif cookiecutter.database == "sqlite" %}
+BEGINCOMMENT
+sqlite_db_operations
+ENDCOMMENT
+{% endraw %}
 
 {% else %}
-db_file="../conf/db/db.sqlite3"
-right_now=`date +%Y%m%d%H%M%S`
-if [ -f "$db_file" ]
-then
-    mv -v "$db_file" ../conf/db/db_bckp_"$right_now".sqlite3
-    # rm -v ../conf/db/db.sqlite3
-else
-    echo "$db_file not found."
-fi
+sqlite_db_operations
+
+{% raw %}
+# {% else %}
+BEGINCOMMENT
+sqlite_db_operations
+ENDCOMMENT
+{% endraw %}
 
 {% endif %}
 
