@@ -4,7 +4,7 @@
 :toc: left
 :sectnums:
 
-This is my initial attempt at creating a reusable https://docs.djangoproject.com/en/1.11/releases/[Django 1.11.x] project skeleton using https://github.com/audreyr/cookiecutter[cookiecutter]. This cookiecutter template is mostly based on personal preferences and is nowhere near perfect. It's still a work in progress. Contributions and suggestions for improvement are welcome.
+This is my initial attempt at creating a reusable https://docs.djangoproject.com/en/1.11/releases/[Django 1.11.x] project skeleton using https://github.com/audreyr/cookiecutter[cookiecutter]. This cookiecutter template is mostly a reflection of my personal preferences. It does, however, try to employ best practices, for example, the https://12factor.net/[12-factor-app], https://github.com/arocks/edge/[Arun Ravindran's *Edge* project skeleton] and https://github.com/pydanny/cookiecutter-django[Daniel Greenfeld's *Cookiecutter Django* framework]. It is nowhere near perfect, and thus remains a work in progress. Contributions and suggestions for improvement are welcome.
 
 == Feaures
 
