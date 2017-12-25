@@ -62,7 +62,7 @@ This is my initial attempt at creating a reusable https://docs.djangoproject.com
 
 ===== custom scripts
 
-* https://github.com/engineervix/cookiecutter-django-vix/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/src/initialize_db.sh[`initialize_db.sh`] -- deletes all migrations and `.pyc` files, recreates Postgres / PostGIS database (or deletes sqlite database -- not yet implemented), recreates migrations, superuser and basically lets you _start afresh_.
+* https://github.com/engineervix/cookiecutter-django-vix/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/src/initialize_db.sh[`initialize_db.sh`] -- deletes all migrations and `.pyc` files, recreates SQLite, Postgres / PostGIS database, recreates migrations, superuser and basically lets you _start afresh_.
 * https://github.com/engineervix/cookiecutter-django-vix/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/bckp/db/syncdb.sh[`syncdb.sh`] -- for backing up and restoring Postgres / PostGIS database
 
 === admin
