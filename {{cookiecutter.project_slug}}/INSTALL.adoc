@@ -89,14 +89,14 @@ This is my initial attempt at creating a reusable https://docs.djangoproject.com
 
 == To Do
 
-* add settings for nginx
-* add settings for uwsgi
-* create reusable components such as an *about page* complete with _contact forms_, _location map integration_
-* signup/login with social network integration
-* logging via https://sentry.io/welcome/[sentry] or similar
-* caching via https://memcached.org/[Memcached]
-* Analytics, SEO
-* Leaflet
+* [ ] Tests, Code Coverage, CI
+* [ ] add settings for nginx
+* [ ] add settings for uwsgi
+* [ ] create reusable components such as an *about page* complete with _contact forms_, _location map integration_ using http://leafletjs.com/[leaflet.js]
+* [ ] signup/login with social network integration
+* [ ] logging via https://sentry.io/welcome/[sentry] or similar
+* [ ] caching via https://memcached.org/[Memcached]
+* [ ] Analytics, SEO
 
 == Setup
 
