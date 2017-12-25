@@ -16,7 +16,6 @@ sqlite_db_operations() {
   # we'll make a copy of existing SQLite Database, just in Case
   db_file="../conf/db/db.sqlite3"
   right_now=`date +%Y%m%d%H%M%S`
-  chown $(whoami):$(whoami) ../conf/db/
   if [ -f "$db_file" ]
   then
       mv -v "$db_file" ../conf/db/db_bckp_"$right_now".sqlite3
