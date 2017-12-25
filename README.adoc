@@ -48,7 +48,7 @@ This is my initial attempt at creating a reusable https://docs.djangoproject.com
 
 ===== custom nginx error pages
 
-* Courtesy of https://github.com/alexphelps/server-error-pages[Alex Phelps] (same as above icon:hand-o-up[]) and https://github.com/AndiDittrich/HttpErrorPages[Andi Dittrich].
+* Courtesy of https://github.com/alexphelps/server-error-pages[Alex Phelps] (same as above ☝️) and https://github.com/AndiDittrich/HttpErrorPages[Andi Dittrich].
 
 === Back end
 
@@ -74,7 +74,7 @@ This is my initial attempt at creating a reusable https://docs.djangoproject.com
 * https://github.com/django-extensions/django-extensions[django-extensions] -- global custom management extensions for the Django Framework. I especially like https://django-extensions.readthedocs.io/en/latest/runserver_plus.html[`runserver_plus`] - the standard runserver stuff but with the Werkzeug debugger baked in. Requires http://werkzeug.pocoo.org/[Werkzeug].
 * https://github.com/praekelt/django-recaptcha[django-recaptcha]
 * https://github.com/alsoicode/django-maintenancemode-2[django-maintenancemode-2] -- makes it easy to put your Django site into "maintenance mode", or more technically, return an HTTP 503 response. This project differs slightly from other implementations in that the maintenance mode flag is stored in your database versus settings or an environment variable. If your site is deployed to multiple servers, the centralized database-based maintenance flag makes it a snap to bring them all up or down at once.
-* Option to use https://www.sparkpost.com/[Sparkpost] as email backend on production, via the https://github.com/SparkPost/python-sparkpost[python sparkpost client]
+* Option to use https://www.sparkpost.com/[Sparkpost] as email backend for production use, via the https://github.com/SparkPost/python-sparkpost[python sparkpost client]
 
 
 === Bible Cross-Referencing Options (Not implemented, only documented for reference)
@@ -160,7 +160,7 @@ psql
 # CREATE EXTENSION postgis_topology;
 # \q
 # -------- Later ... After Django Does its business: --------
-# \c vi_jbt_conf
+# \c DB_Name
 # ALTER ROLE DB_User NOSUPERUSER;
 # \q
 
