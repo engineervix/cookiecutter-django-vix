@@ -92,7 +92,7 @@ This is my initial attempt at creating a reusable https://docs.djangoproject.com
 == To Do
 
 * [ ] Tests, Code Coverage, CI
-* [ ] Python 3 Support
+* [ ] Port this to Python 3
 * [ ] add settings for nginx
 * [ ] add settings for uwsgi
 * [ ] create reusable components such as an *about page* complete with _contact forms_, _location map integration_ using http://leafletjs.com/[leaflet.js]
