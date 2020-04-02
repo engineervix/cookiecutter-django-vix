@@ -6,7 +6,10 @@
 
 image::https://img.shields.io/badge/python-2.7-brightgreen.svg[Python 2.7]
 
-This is my initial attempt at creating a reusable https://docs.djangoproject.com/en/1.11/releases/[Django 1.11.x] project skeleton using https://github.com/audreyr/cookiecutter[cookiecutter]. This cookiecutter template is mostly a reflection of my personal preferences. It does, however, try to employ best practices, for example, the https://12factor.net/[12-factor-app], https://github.com/arocks/edge/[Arun Ravindran's *Edge* project skeleton] and https://github.com/pydanny/cookiecutter-django[Daniel Greenfeld's *Cookiecutter Django* framework]. It is nowhere near perfect, and thus remains a work in progress. Contributions and suggestions for improvement are welcome.
+WARNING: I have since abandonded this project, having switched to python3 and changed my development workflow quite significantly. If you need a perfect, mature, battle-tested Django starter template, use https://github.com/pydanny/cookiecutter-django[Daniel Greenfeld's *Cookiecutter Django* framework].
+
+
+This [.line-through]#is# was my initial attempt at creating a reusable https://docs.djangoproject.com/en/1.11/releases/[Django 1.11.x] project skeleton using https://github.com/audreyr/cookiecutter[cookiecutter]. This cookiecutter template This [.line-through]#is# was mostly a reflection of my personal preferences at the time. It did, however, try to employ best practices, for example, the https://12factor.net/[12-factor-app], https://github.com/arocks/edge/[Arun Ravindran's *Edge* project skeleton] and https://github.com/pydanny/cookiecutter-django[Daniel Greenfeld's *Cookiecutter Django* framework]. It is nowhere near perfect, and thus was intended to be continuosly improved upon (but that never happened!).
 
 == Feaures
 
